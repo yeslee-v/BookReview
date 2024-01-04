@@ -9,11 +9,6 @@ jobs:
   issue:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Project ID
-        id: get_project
-        run: echo "::set-output name=project_id::$(gh project view --json=id --project "2023-2024 book list")"
-      - name: Add Project to Issue
-        run: gh issue edit ${{ github.event.issue.html_url }} --add-project ${{ steps.get_project.outputs.project_id }}
       - name: Add Label to Issue
         run: gh issue edit ${{ github.event.issue.html_url }} --add-label "2024"
       - name: Add Assignee to Issue
