@@ -1,4 +1,4 @@
-name: add_issue
+name: Add issue
 
 on:
   issues:
@@ -6,10 +6,15 @@ on:
       - opened
 
 jobs:
-  issue:
+  process_issue:
     runs-on: ubuntu-latest
     steps:
-      - name: Add Label to Issue
-        run: gh issue edit ${{ github.event.issue.html_url }} --add-label "2024"
-      - name: Add Assignee to Issue
-        run: gh issue edit ${{ github.event.issue.html_url }} --add-assignee "yeslee-v"
+      - name: Set up environment variables
+        run: |
+          ISSUE_URL="${{ github.event.issue.html_url }}"
+          GITHUB_TOKEN="${{ secrets.TOKEN }}"
+      - name: Add Label, Assignee to Issue
+        run: |
+          gh issue edit "$ISSUE_URL" --add-label "2024" --add-assignee "yeslee-v"
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
