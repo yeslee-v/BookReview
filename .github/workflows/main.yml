@@ -11,10 +11,10 @@ jobs:
     steps:
       - name: Set up environment variables
         run: |
-          ISSUE_URL="${{ github.event.issue.html_url }}"
-          GH_TOKEN="${{ secrets.TOKEN }}"
+          ISSUE_URL=${{ github.event.issue.html_url }}
+          GH_TOKEN=${{ secrets.TOKEN }}
       - name: Add Label, Assignee to Issue
         run: |
-          gh issue edit "$ISSUE_URL" --add-label "2024" --add-assignee "yeslee-v"
+          gh issue edit $ISSUE_URL --add-label "2024" --add-assignee "yeslee-v"
         env:
           GH_TOKEN: ${{ secrets.TOKEN }}
