@@ -9,12 +9,11 @@ jobs:
   process_issue:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up environment variables
+      - name: Set up ISSUE_URL
         run: |
           ISSUE_URL=${{ github.event.issue.html_url }}
-          GH_TOKEN=${{ secrets.TOKEN }}
       - name: Add Label, Assignee to Issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh issue edit $ISSUE_URL --add-label "2024" --add-assignee "yeslee-v"
-        env:
-          GH_TOKEN: ${{ secrets.TOKEN }}
