@@ -1,11 +1,23 @@
-name: Add issue
-
 on:
   issues:
     types:
       - opened
 
+name: Add labels when create issue
+
+permissions:
+  contents: read
+  issues: write 
+
 jobs:
+  stuff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   project_issue:
     runs-on: ubuntu-latest
     steps:
@@ -13,9 +25,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
-          gh issue edit $ISSUE_URL --add-label "2024"
-      - env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          ISSUE_URL: ${{ github.event.issue.html_url }}
-        run: |
-          gh issue edit $ISSUE_URL --add-assignee "yeslee-v"
+          gh issue edit $ISSUE_URL --add-label "2024" --add-assignee "yeslee-v"
