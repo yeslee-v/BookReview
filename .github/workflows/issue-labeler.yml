@@ -8,7 +8,7 @@ on:
 permissions:
   contents: read
   issues: write
-  pull-requests: write 
+  pull-requests: write
 
 jobs:
   add-label:
@@ -20,20 +20,14 @@ jobs:
 
       - name: Set up GitHub CLI
         uses: actions/checkout@v2
-        with:
-          repository: actions/checkout
-          ref: v2
 
       - name: Authenticate with GitHub CLI
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh auth setup-git
 
-      - name: Print issue number for debugging
-        run: echo "Issue number: ${{ github.event.issue.number }}"
-
       - name: Add labels and assignees to issue
-        run: |
-          gh issue edit ${{ github.event.issue.number }} --add-label "2024" --add-assignee "yeslee-v"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue edit ${{ github.event.issue.number }} --add-label "2024" --add-assignee "yeslee-v"
