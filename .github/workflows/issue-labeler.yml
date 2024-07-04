@@ -12,6 +12,7 @@ permissions:
 jobs:
   add-label:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -22,9 +23,13 @@ jobs:
           repository: actions/checkout
           ref: v2
 
-      - name: Add labels and assignees to issue
+      - name: Authenticate with GitHub CLI
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh auth setup-git
+
+      - name: Add labels and assignees to issue
         run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
           gh issue edit ${{ github.event.issue.number }} --add-label "2024" --add-assignee "yeslee-v"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
