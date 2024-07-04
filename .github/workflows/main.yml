@@ -1,28 +1,30 @@
+name: Issue Labeler
+
 on:
   issues:
     types:
       - opened
-
-name: Add labels when create issue
 
 permissions:
   contents: read
   issues: write 
 
 jobs:
-  stuff:
+  add-label:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: JasonEtco/create-an-issue@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up GitHub CLI
+        uses: actions/checkout@v2
+        with:
+          repository: actions/checkout
+          ref: v2
+
+      - name: Add labels and assignees to issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  project_issue:
-    runs-on: ubuntu-latest
-    steps:
-      - env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
-          gh issue edit $ISSUE_URL --add-label "2024" --add-assignee "yeslee-v"
+          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+          gh issue edit ${{ github.event.issue.number }} --add-label "2024" --add-assignee "yeslee-v"
