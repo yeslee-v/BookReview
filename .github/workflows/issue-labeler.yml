@@ -26,8 +26,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh auth setup-git
 
-      - name: Add labels and assignees to issue
+      - name: Add labels to issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh issue edit ${{ github.event.issue.number }} --add-label "2024" --add-assignee ${{ github.event.issue.user.login }}
+          gh issue edit ${{ github.event.issue.number }} --add-label "2024"
+
+      - name: Add assignees to issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue edit ${{ github.event.issue.number }} --add-assignee ${{ github.event.issue.user.login }}
