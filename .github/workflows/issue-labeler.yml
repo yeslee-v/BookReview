@@ -30,4 +30,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh issue edit ${{ github.event.issue.number }} --add-label "2024" --add-assignee "yeslee-v"
+          gh issue edit ${{ github.event.issue.number }} --add-label "2024" --add-assignee ${{ github.event.issue.user.login }}
